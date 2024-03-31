@@ -1,0 +1,2 @@
+# MyAutoRequestReview
+私のレポジトリでプルリクエストがオープンされた際に自動で私にレビューが依頼されるGitHub Actionsのワークフロー
