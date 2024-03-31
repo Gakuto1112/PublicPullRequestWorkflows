@@ -1,0 +1,13 @@
+name: Request review
+
+on: workflow_call
+
+jobs:
+  request_review:
+    name: Request a review for the pull request to Gakuto1112
+    runs-on: ubuntu-latest
+    steps:
+      - name: Request review
+        uses: hkusu/review-assign-action@v1.4.0
+        with:
+          reviewers: Gakuto1112
