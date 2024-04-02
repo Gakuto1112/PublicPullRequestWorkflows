@@ -9,48 +9,27 @@ on:
         type: string
 
 jobs:
-  check_trigger:
-    name: Check pull request trigger
-    runs-on: ubuntu-latest
-    outputs:
-      is_next_workflow: ${{ steps.check_target_workflow.is_next_workflow }}
-    steps:
-      - name: Download artifact
-        uses: dawidd6/action-download-artifact@v3.1.4
-        with:
-          workflow: request_review_trigger.yml
-          name: trigger_data
-      - name: Output trigger data
-        id: output_trigger_data
-        run: echo trigger_data=$(<./trigger_data.json) >> $GITHUB_OUTPUT
-      - run: echo ${{ fromJSON(steps.output_trigger_data.outputs.trigger_data).next_workflow }}
-      - run: echo ${{ toJSON(github.event) }}
-      - name: Check target workflow
-        id: check_target_workflow
-        run: echo is_next_workflow=${{ fromJSON(steps.output_trigger_data.outputs.trigger_data).next_workflow == github.event.workflow.name }} >> $GITHUB_OUTPUT
   request_review:
     name: Request a review for the pull request to ${{ inputs.reviewer }}
     runs-on: ubuntu-latest
-    needs: check_trigger
-    if: ${{ needs.check_trigger.outputs.is_next_workflow == 'true'}}
     steps:
       - name: Download artifact
         uses: dawidd6/action-download-artifact@v3.1.4
         with:
-          workflow_search: trigger_pull_request_action.yml
-          event: pull_request_trigger
-          name: trigger_data
-      - name: Output trigger data
-        id: output_trigger_data
-        run: echo trigger_data=$(<./trigger_data.json) >> $GITHUB_OUTPUT
+          workflow_search: trigger_request_review_action.yml
+          event: pull_request
+          name: pull_request_data
+      - name: Output pull request
+        id: output_pull_request_data
+        run: echo pull_request_data=$(<./pull_request_data.json) >> $GITHUB_OUTPUT
       - name: Request a review for the pull request to ${{ inputs.reviewer }}
-        if: ${{ fromJSON(steps.output_trigger_data.outputs.trigger_data).pull_request_data.pull_request.user.login != inputs.reviewer }}
+        if: ${{ fromJSON(steps.output_pull_request_data.outputs.pull_request_data).pull_request_data.pull_request.user.login != inputs.reviewer }}
         run: |
           gh api \
           --method POST \
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
-          /repos/${{ github.repository }}/pulls/${{ fromJSON(steps.output_trigger_data.outputs.trigger_data).number }}/requested_reviewers \
+          /repos/${{ github.repository }}/pulls/${{ fromJSON(steps.output_pull_request_data.outputs.pull_request_data).number }}/requested_reviewers \
           -f "reviewers[]=${{ inputs.reviewer }}"
         env:
           GH_TOKEN: ${{ github.token }}

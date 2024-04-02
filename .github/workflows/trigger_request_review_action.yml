@@ -1,4 +1,4 @@
-name: Trigger request review Action
+name: Trigger request review action
 
 on:
   pull_request:
@@ -9,6 +9,6 @@ on:
 jobs:
   call_workflow:
     name: Call workflow
-    uses: ./.github/workflows/trigger_pull_request_action_core.yml
+    uses: ./.github/workflows/trigger_request_review_action_core.yml
     with:
       trigger_workflow_name: Request review

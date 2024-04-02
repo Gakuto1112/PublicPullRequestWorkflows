@@ -1,0 +1,20 @@
+# `pull_request_target`イベントトリガーを用いることでwrite権限やシークレットが使えるが同時にセキュリティリスクを抱えることになる。
+# そこで`pull_request`と`workflow_run`を併用することで、セキュリティを担保したまま、`pull_request_target`に似た挙動を再現する。
+
+name: Trigger request review action
+
+on: workflow_call
+
+jobs:
+  get_data:
+    name: Get pull request data
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get pull request data
+        run: echo '${{ toJSON(github.event) }}' > ./pull_request_data.json
+      - name: Upload pull request data
+        uses: actions/upload-artifact@v4.3.1
+        with:
+          name: pull_request_data
+          path: ./pull_request_data.json
+          retention-days: 1
