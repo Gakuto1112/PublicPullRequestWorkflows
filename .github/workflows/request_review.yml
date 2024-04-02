@@ -7,12 +7,15 @@ on:
       - opened
       - ready_for_review
 
+env:
+  reviewer: Gakuto1112
+
 jobs:
   request_review:
-    name: Request a review for the pull request to Gakuto1112
+    name: Request a review for the pull request to ${{ env.reviewer }}
     runs-on: ubuntu-latest
     steps:
       - name: Request review
-        uses: hkusu/review-assign-action@v1.4.0
-        with:
-          reviewers: Gakuto1112
+        run: gh pr edit ${{ github.event.number }} --add-reviewer ${{ env.reviewer }}
+        env:
+          GH_TOKEN: ${{ github.token }}
