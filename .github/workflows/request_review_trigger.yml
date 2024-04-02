@@ -9,4 +9,4 @@ on:
 jobs:
   call_workflow:
     name: Call workflow
-    uses: ./.github/workflows/trigger_request_review_action_core.yml
+    uses: ./.github/workflows/request_review_trigger_core.yml
