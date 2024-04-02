@@ -1,10 +1,11 @@
 name: Request review
 
 on:
-  pull_request_target:
+  workflow_run:
+    workflows:
+      - Trigger request review action
     types:
-      - opened
-      - ready_for_review
+      - completed
 
 jobs:
   call_workflow:
