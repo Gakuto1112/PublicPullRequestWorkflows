@@ -1,4 +1,4 @@
-name: Comment when changes requested core
+name: Comment when changes requested
 
 on: workflow_call
 
