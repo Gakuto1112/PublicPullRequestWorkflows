@@ -17,18 +17,17 @@ jobs:
         uses: dawidd6/action-download-artifact@v3.1.4
         with:
           workflow: request_review_trigger.yml
-          name: pull_request_data
+          name: event_data
       - name: Output pull request
-        id: output_pull_request_data
-        run: echo pull_request_data=$(<./pull_request_data.json) >> $GITHUB_OUTPUT
+        id: output_event_data
+        run: echo event_data=$(<./event_data.json) >> $GITHUB_OUTPUT
       - name: Request a review for the pull request to ${{ inputs.reviewer }}
-        if: ${{ fromJSON(steps.output_pull_request_data.outputs.pull_request_data).pull_request_data.pull_request.user.login != inputs.reviewer }}
         run: |
           gh api \
           --method POST \
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
-          /repos/${{ github.repository }}/pulls/${{ fromJSON(steps.output_pull_request_data.outputs.pull_request_data).number }}/requested_reviewers \
+          /repos/${{ github.repository }}/pulls/${{ fromJSON(steps.output_event_data.outputs.event_data).number }}/requested_reviewers \
           -f "reviewers[]=${{ inputs.reviewer }}"
         env:
           GH_TOKEN: ${{ github.token }}

@@ -1,20 +1,14 @@
 # `pull_request_target`イベントトリガーを用いることでwrite権限やシークレットが使えるが同時にセキュリティリスクを抱えることになる。
 # そこで`pull_request`と`workflow_run`を併用することで、セキュリティを担保したまま、`pull_request_target`に似た挙動を再現する。
 
-name: Trigger request review action
+name: Trigger comment action
 
-on:
-  workflow_call:
-    inputs:
-      reviewer:
-        description: Reviewer's GitHub username
-        required: true
-        type: string
+on: workflow_call
 
 jobs:
   get_data:
     name: Get event data
-    if: ${{ github.event.pull_request.user.login != inputs.reviewer }}
+    if: ${{ github.event.review.state == 'changes_requested' }}
     runs-on: ubuntu-latest
     steps:
       - name: Get event data
@@ -23,5 +17,5 @@ jobs:
         uses: actions/upload-artifact@v4.3.1
         with:
           name: event_data
-          path: ./event_DATA.json
+          path: ./event_data.json
           retention-days: 1
