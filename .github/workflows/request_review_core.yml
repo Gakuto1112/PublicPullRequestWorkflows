@@ -16,6 +16,6 @@ jobs:
       pull-requests: write
     steps:
       - name: Request review
-        run: gh pr edit ${{ github.event.number }} --add-reviewer ${{ inputs.reviewer }}
+        run: gh pr edit ${{ github.event.number }} --add-reviewer ${{ inputs.reviewer }} --repo ${{ github.repository }}
         env:
           GH_TOKEN: ${{ github.token }}
