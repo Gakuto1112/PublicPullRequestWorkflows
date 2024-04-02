@@ -23,6 +23,8 @@ jobs:
       - name: Output trigger data
         id: output_trigger_data
         run: echo trigger_data=$(<./trigger_data.json) >> $GITHUB_OUTPUT
+      - run: echo ${{ fromJSON(steps.output_trigger_data.outputs.trigger_data).next_workflow }}
+      - run: echo ${{ github.event.workflow.name }}
       - name: Check target workflow
         id: check_target_workflow
         run: echo is_next_workflow=${{ fromJSON(steps.output_trigger_data.outputs.trigger_data).next_workflow == github.event.workflow.name }} >> $GITHUB_OUTPUT
