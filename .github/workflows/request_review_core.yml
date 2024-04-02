@@ -1,4 +1,4 @@
-name: Request review
+name: Request review core
 
 on:
   workflow_call:
