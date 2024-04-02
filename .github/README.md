@@ -14,6 +14,8 @@ on:
     types:
       - opened
       - reopened
+      - ready_for_review
+      - synchronize
 
 jobs:
   call_workflow:
