@@ -17,13 +17,13 @@ jobs:
       - name: Output pull request
         id: output_event_data
         run: echo event_data=$(<./event_data.json) >> $GITHUB_OUTPUT
-      - name: Comment
+      - name: Create comment file
         run: |
-          gh api \
-          --method POST \
-          -H "Accept: application/vnd.github+json" \
-          -H "X-GitHub-Api-Version: 2022-11-28" \
-          /repos/${{ github.repository }}/issues/${{ fromJSON(steps.output_event_data.outputs.event_data).pull_request.number }}/comments \
-          -f body='@${{ fromJSON(steps.output_event_data.outputs.event_data).pull_request.user.login }}\n${{ fromJSON(steps.output_event_data.outputs.event_data).review.user.login }} requested you to make some changes. Once you make changes, please re-request ${{ fromJSON(steps.output_event_data.outputs.event_data).review.user.login }} to review by clicking "re-request review" button 🔄 (located in the reviewers list on the right side of this page).'
+          cat << EOF > ./comment.txt
+          @${{ fromJSON(steps.output_event_data.outputs.event_data).pull_request.user.login }}
+          ${{ fromJSON(steps.output_event_data.outputs.event_data).review.user.login }} requested you to make some changes. Once you make changes, please re-request ${{ fromJSON(steps.output_event_data.outputs.event_data).review.user.login }} to review by clicking "re-request review" button 🔄 (located in the reviewers list on the right side of this page).
+          EOF
+      - name: Post comment
+        run: gh pr comment ${{ fromJSON(steps.output_event_data.outputs.event_data).pull_request.number }} --body-file ./comment.txt --repo ${{ github.repository }}
         env:
           GH_TOKEN: ${{ github.token }}
