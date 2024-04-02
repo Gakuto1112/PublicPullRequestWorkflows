@@ -23,5 +23,5 @@ jobs:
         uses: actions/upload-artifact@v4.3.1
         with:
           name: event_data
-          path: ./event_DATA.json
+          path: ./event_data.json
           retention-days: 1
