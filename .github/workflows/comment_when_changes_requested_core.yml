@@ -5,9 +5,12 @@ on: workflow_call
 jobs:
   comment:
     name: Comment when changes requested
+    if: ${{ github.event.review.state == 'changes_requested' }}
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
     steps:
-      - run: echo ${{ github.event.review.state }}
-      - run: echo ${{ github.event.review.user.login }}
+      - name: Comment
+        run: gh pr comment ${{ github.event.number }} --body '${{ github.event.review.user.login }} requested you to make some changes. Once changes are made, please re-request ${{ github.event.number }} to review by clicking "re-request review" button 🔄 (located in the reviewers list on the right side of this page).' --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ github.token }}
