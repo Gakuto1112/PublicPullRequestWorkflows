@@ -1,23 +1,16 @@
 name: Request review
 
 on:
-  workflow_call:
   pull_request_target:
     types:
       - opened
       - ready_for_review
 
-env:
-  reviewer: Gakuto1112
-
 jobs:
-  request_review:
-    name: Request a review for the pull request to ${{ env.reviewer }}
-    runs-on: ubuntu-latest
+  call_workflow:
+    name: Call workflow
     permissions:
       pull-requests: write
-    steps:
-      - name: Request review
-        run: gh pr edit ${{ github.event.number }} --add-reviewer ${{ env.reviewer }}
-        env:
-          GH_TOKEN: ${{ github.token }}
+    uses: .github/workflows/request_review_core.yml
+    with:
+      reviewer: Gakuto1112

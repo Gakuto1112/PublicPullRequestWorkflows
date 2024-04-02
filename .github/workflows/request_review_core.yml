@@ -1,0 +1,21 @@
+name: Request review
+
+on:
+  workflow_call:
+    inputs:
+      reviewer:
+        description: Reviewer's GitHub username
+        required: true
+        type: string
+
+jobs:
+  request_review:
+    name: Request a review for the pull request to ${{ inputs.reviewer }}
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Request review
+        run: gh pr edit ${{ github.event.number }} --add-reviewer ${{ inputs.reviewer }}
+        env:
+          GH_TOKEN: ${{ github.token }}

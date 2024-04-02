@@ -1,8 +1,8 @@
 # MyAutoRequestReview
-私（[Gakuto1112](https://github.com/Gakuto1112)）のレポジトリでプルリクエストがオープンされた際に自動で私にレビューが依頼される[GitHub Actions](https://github.co.jp/features/actions)のワークフローのレポジトリです。
+プルリクエストがオープンされた際に自動で設定したGitHubユーザーにレビューが依頼される[GitHub Actions](https://github.co.jp/features/actions)のワークフローのレポジトリです。
 
 ## 使い方
-任意のレポジトリで以下のワークフローファイルを追加してください。
+任意のレポジトリで以下のワークフローファイルを追加してください。`<github_username>`にはレビューを依頼したいGitHubユーザーの名前を入れてください。なお、レビューを依頼したい人は該当レポジトリへの書き込み権限を持つ必要があります。
 
 `.github/workflows/request_review.yml`
 
@@ -20,13 +20,12 @@ jobs:
     name: Call workflow
     permissions:
       pull-requests: write
-    uses: Gakuto1112/MyAutoRequestReview/.github/workflows/request_review.yml@main
+    uses: Gakuto1112/MyAutoRequestReview/.github/workflows/request_review_core.yml@main
+    with:
+      reviewer: <github_username>
 ```
 
-上記ファイルを追加したレポジトリにプルリクエストが提出されると、GitHub Actionsが私に向かってレビューを依頼します。
+上記ファイルを追加したレポジトリにプルリクエストが提出されると、GitHub Actionsが対象のGitHubユーザーに向かってレビューを依頼します。
 
 > [!NOTE]
-> GitHubの仕様上、自分自身でプルリクエストを提出した場合には自分自身へのレビュー依頼は出されません。
-
-> [!TIP]
-> このレポジトリの`.github/workflows/request_review.yml`内の環境変数である、`reviewer`を任意のGitHubユーザー名に変更することで、そのユーザーにレビューを依頼することができます。レビューを依頼したいユーザーがレポジトリに書き込める権限を持っている必要があります。
+GitHubの仕様上、自分自身でプルリクエストを提出した場合には自分自身へのレビュー依頼は出されません。
