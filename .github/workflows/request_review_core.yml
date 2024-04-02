@@ -18,8 +18,7 @@ jobs:
       - name: Download artifact
         uses: dawidd6/action-download-artifact@v3.1.4
         with:
-          workflow_search: trigger_pull_request_action.yml
-          event: pull_request_trigger
+          workflow: trigger_pull_request_action.yml
           name: trigger_data
       - name: Output trigger data
         id: output_trigger_data
