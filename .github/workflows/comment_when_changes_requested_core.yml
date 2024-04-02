@@ -1,12 +1,6 @@
 name: Comment when changes requested core
 
-on:
-  workflow_call:
-    inputs:
-      reviewer:
-        description: Reviewer's GitHub username
-        required: true
-        type: string
+on: workflow_call
 
 jobs:
   comment:
