@@ -17,6 +17,9 @@ jobs:
       - name: Output pull request
         id: output_event_data
         run: echo event_data=$(<./event_data.json) >> $GITHUB_OUTPUT
+      - run: echo ${{ toJSON(fromJSON(steps.output_event_data.outputs.event_data).review) }}
+      - run: echo ${{ toJSON(fromJSON(steps.output_event_data.outputs.event_data).review.user) }}
+      - run: echo ${{ fromJSON(steps.output_event_data.outputs.event_data).review.user.login }}
       - name: Comment
         run: |
           gh api \
