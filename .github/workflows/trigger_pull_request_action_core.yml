@@ -23,7 +23,7 @@ jobs:
       - name: Enclose json file
         run: echo '}' >> ./trigger_data.json
       - name: Upload trigger data
-        uses: actions/upload-artifact@4.3.1
+        uses: actions/upload-artifact@v4.3.1
         with:
           name: trigger_data
           path: ./trigger_data.json
