@@ -15,7 +15,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - run: echo ${{ github.event.sender }}
+      - run: echo ${{ github.event.pull_request.user.login }}
       - name: Request review
         run: |
           gh api \
