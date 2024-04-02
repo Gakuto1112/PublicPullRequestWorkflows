@@ -1,0 +1,14 @@
+name: Trigger request review Action
+
+on:
+  pull_request:
+    types:
+      - opened
+      - ready_for_review
+
+jobs:
+  call_workflow:
+    name: Call workflow
+    uses: ./.github/workflows/trigger_pull_request_action_core.yml
+    with:
+      trigger_workflow_name: Request review
