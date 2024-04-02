@@ -12,12 +12,11 @@ jobs:
       - name: Download artifact
         uses: dawidd6/action-download-artifact@v3.1.4
         with:
-          workflow: request_review_trigger.yml
+          workflow: comment_when_changes_requested_trigger.yml
           name: event_data
       - name: Output pull request
         id: output_event_data
         run: echo event_data=$(<./event_data.json) >> $GITHUB_OUTPUT
-      - run: echo ${{ toJSON(steps.output_event_data.outputs.event_data) }}
       - name: Comment
         run: |
           gh api \
@@ -25,6 +24,6 @@ jobs:
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /repos/${{ github.repository }}/issues/${{ fromJSON(steps.output_event_data.outputs.event_data).pull_request.number }}/comments \
-          -f body='${{ fromJSON(steps.output_event_data.outputs.event_data).review.user.login }} requested you to make some changes. Once you make changes, please re-request ${{ fromJSON(steps.output_event_data.outputs.event_data).review.user.login }} to review by clicking "re-request review" button 🔄 (located in the reviewers list on the right side of this page).'
+          -f body='@${{ fromJSON(steps.output_event_data.outputs.event_data).pull_request_user_login }} ${{ fromJSON(steps.output_event_data.outputs.event_data).review.user.login }} requested you to make some changes. Once you make changes, please re-request ${{ fromJSON(steps.output_event_data.outputs.event_data).review.user.login }} to review by clicking "re-request review" button 🔄 (located in the reviewers list on the right side of this page).'
         env:
           GH_TOKEN: ${{ github.token }}
