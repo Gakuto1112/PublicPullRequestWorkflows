@@ -11,11 +11,11 @@ on:
 jobs:
   request_review:
     name: Request a review for the pull request to ${{ inputs.reviewer }}
+    if: ${{ github.event.pull_request.user.login != inputs.reviewer }}
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
     steps:
-      - run: echo ${{ github.event.pull_request.user.login }}
       - name: Request review
         run: |
           gh api \
