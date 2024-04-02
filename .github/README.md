@@ -13,7 +13,7 @@ on:
   pull_request_target:
     types:
       - opened
-      - reopened
+      - ready_for_review
 
 jobs:
   call_workflow:
