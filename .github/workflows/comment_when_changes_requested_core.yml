@@ -1,0 +1,19 @@
+name: Comment when changes requested core
+
+on:
+  workflow_call:
+    inputs:
+      reviewer:
+        description: Reviewer's GitHub username
+        required: true
+        type: string
+
+jobs:
+  comment:
+    name: Comment when changes requested
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - run: echo ${{ github.event.review.state }}
+      - run: echo ${{ github.event.review.user.login }}
