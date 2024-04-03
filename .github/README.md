@@ -40,3 +40,20 @@
 
 - comment_when_changes_requested.yml
 - comment_when_changes_requested_trigger.yml
+
+## ワークフローの仕組み
+プルリクエストがオープンされると`request_review_trigger.yml`が、レビュワーがレビュイーに対して変更を要求すると`comment_when_changes_requested_trigger.yml`が実行されます。
+これらのワークフローはプルリクエストのイベントデータをアーティファクトとしてアップロードします。
+これらのアーティファクトの有効期限は1日です。
+
+通常、GitHub Actionsによるプルリクエストの操作にはプルリクエストに対する書き込み権限が必要です。
+プルリクエストに書き込み権限を与えるにはワークフローのトリガーイベントを`pull_request_target`にする必要がありますが、これを使用すると悪意のあるレビュイーによってレポジトリシークレットが盗まれる可能性があります。
+このレポジトリのワークフローでは、`pull_request_target`の代わりに`pull_request`と`workflow_run`を併用しているため、パブリックレポジトリでも安全にワークフローを実行できます。
+詳しくは以下の記事をご覧ください。
+
+[Keeping your GitHub Actions and workflows secure Part 1: Preventing pwn requests](https://securitylab.github.com/research/github-actions-preventing-pwn-requests/)
+
+上記2つのワークフローの実行が完了すると、それぞれ`request_review.yml`と`comment_when_changes_requested.yml`が実行されます。
+先に実行したワークフローのアーティファクトのデータを基にプルリクエストを操作します。
+
+これらのワークフローにはプルリクエストへの書き込み権限が与えられていますが、この2つのワークフローは常にベースレポジトリのベースブランチのワークフローファイルから実行されるため、悪意のレビュイーにレポジトリシークレットが盗まれることがありません。
