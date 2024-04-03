@@ -43,19 +43,21 @@ Please add the following files in `src/` to `./github/workflows` to the target r
 - comment_when_changes_requested.yml
 - comment_when_changes_requested_trigger.yml
 
-## ワークフローの仕組み
-プルリクエストがオープンされると`request_review_trigger.yml`が、レビュワーがレビュイーに対して変更を要求すると`comment_when_changes_requested_trigger.yml`が実行されます。
-これらのワークフローはプルリクエストのイベントデータをアーティファクトとしてアップロードします。
-これらのアーティファクトの有効期限は1日です。
+## Workflow mechanisms
+`request_review_trigger.yml` will be triggered when a pull request is opened, and `comment_when_changes_requested_trigger.yml` will be triggered when a reviewer requests a reviewee to make some changes.
+These workflows upload event data of pull requests as artifacts.
+These artifacts will expire in a day.
 
-通常、GitHub Actionsによるプルリクエストの操作にはプルリクエストに対する書き込み権限が必要です。
-プルリクエストに書き込み権限を与えるにはワークフローのトリガーイベントを`pull_request_target`にする必要がありますが、これを使用すると悪意のあるレビュイーによってレポジトリシークレットが盗まれる可能性があります。
-このレポジトリのワークフローでは、`pull_request_target`の代わりに`pull_request`と`workflow_run`を併用しているため、パブリックレポジトリでも安全にワークフローを実行できます。
-詳しくは以下の記事をご覧ください。
+Usually, manipulating pull request with GitHub Actions requires write permission to pull requests.
+The workflow trigger event must be set to `pull_request_target` to give write permission to pull requests.
+However, malicious reviewees may steal your repository secrets by falsifying workflow files if `pull_request_target` are used as a workflow trigger event.
+Workflows in this repository use `pull_request` and `workflow_run` together instead of `pull_request_target`, so these workflows can be safely executed even in public repositories.
+Please see the following article for more information.
 
 [Keeping your GitHub Actions and workflows secure Part 1: Preventing pwn requests](https://securitylab.github.com/research/github-actions-preventing-pwn-requests/)
 
-上記2つのワークフローの実行が完了すると、それぞれ`request_review.yml`と`comment_when_changes_requested.yml`が実行されます。
-先に実行したワークフローのアーティファクトのデータを基にプルリクエストを操作します。
+`request_review.yml` and `comment_when_changes_requested.yml` will be respectively execute after finishing executing the above two workflows.
+They will manipulate pull requests based on data from artifacts by workflows that previously executed.
 
-これらのワークフローにはプルリクエストへの書き込み権限が与えられていますが、この2つのワークフローは常にベースレポジトリのベースブランチのワークフローファイルから実行されるため、悪意のレビュイーにレポジトリシークレットが盗まれることがありません。
+These two workflows are given write permission to pull requests.
+However, they are always executed from the base branch in the base repository, so malicious reviewees cannot steal your repository secrets.
