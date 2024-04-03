@@ -1,0 +1,17 @@
+name: Request review
+
+on:
+  workflow_run:
+    workflows:
+      - Trigger request review action
+    types:
+      - completed
+
+jobs:
+  call_workflow:
+    name: Call workflow
+    permissions:
+      pull-requests: write
+    uses: Gakuto1112/PublicPullRequestWorkflows/.github/workflows/request_review_core.yml
+    with:
+      reviewer: <github_username>
