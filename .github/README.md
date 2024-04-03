@@ -7,38 +7,38 @@ You can use these workflows just by adding some workflow files to `./github/work
 The following workflows are available.
 
 - Request a review to the specific GitHub user when a pull request is opened.
-- Send a comment to the reviewee that encourage them to re-request a review to the reviewer when the reviewer requested the reviewee to make some changes.
+- Send a comment to a reviewee that encourage them to re-request a review to a reviewer when the reviewer requested the reviewee to make some changes.
 
 These workflows are designed to prevent malicious reviewees from abusing pull requests, and can be safely used in public repositories where any GitHub users can be reviewees.
 
-## 使い方
+## How to use
 ### Request review
-プルリクエストがオープンになった際に、予め設定したGitHubユーザーにレビューの依頼を行うワークフローです。
+This workflow will request a review to the specific GitHub user when a pull request is opened.
 
-`src/`内にある以下のファイルをレポジトリの`.github/workflows/`に追加してください。
+Please add the following files in `src/` to `./github/workflows` to the target repository.
 
 - request_review.yml
 - request_review_trigger.yml
 
-上記の各ファイル内の`reviewer: <github_username>`に任意のGitHubユーザー名に書き換えます。
+Please replace `reviewer: <github_username>` with any GitHub username in each of the above files.
 
 > [!NOTE]
-> - 複数ユーザーへのレビュー依頼には対応していません。
-> - レビューを依頼するユーザーが対象のレポジトリへの書き込み権限を有している必要があります。
+> - Requesting reviews to multiple users are not supported.
+> - The user who will be requested a review must have write access to the target repository.
 
-レポジトリでのデフォルト設定では、初回のコントリビューターのプルリクエストに対しては、レポジトリ管理者の承認がないとワークフローが実行されない仕様になっています。
-この設定は レポジトリ設定 → 「Actions」 → 「General」 → 「Fork pull request workflows from outside collaborators」から変更できます。
+With default settings in the repository, deWorkflows that are triggered by a pull request by first time contributors must be approved by repository maintainers.
+This setting can be changed from repository settings → "Actions" →　"General" → "Fork pull request workflows from outside collaborators".
 
 ### Comment when changes required
-レビュワーがプルリクエストに対して変更を要求した場合にレビュイーに対して、変更が完了した際に再度レビューを依頼することを促すコメントを送信するワークフローです。
+This workflow will send a comment to a reviewee that encourage them to re-request a review to a reviewer when the reviewer requested the reviewee to make some changes.
 
-実際にレビュワーがレビュイーに対して変更を要求すると以下のようなコメントがプルリクエストに投稿されます。
+The following comment will be sent to the target pull request when a reviewer requests a reviewee to make some changes.
 
 > @<reviewee_name><br>
 > <reviewer_name> requested you to make some changes.
 > Once you make changes, please re-request <reviewer_name> to review by clicking "re-request review" button 🔄 (located in the reviewers list on the right side of this page).
 
-`src/`内にある以下のファイルをレポジトリの`.github/workflows/`に追加してください。
+Please add the following files in `src/` to `./github/workflows` to the target repository.
 
 - comment_when_changes_requested.yml
 - comment_when_changes_requested_trigger.yml
