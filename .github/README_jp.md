@@ -1,4 +1,4 @@
-Language: 　**English**　|　[日本語](./README_jp.md)
+言語: 　[English](./README.md)　|　**日本語**
 
 # PublicPullRequestWorkflows
 パブリックレポジトリでのプルリクエストに関する、再利用可能な[GitHub Actions](https://github.co.jp/features/actions)ワークフローです。
