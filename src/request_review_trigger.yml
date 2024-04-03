@@ -9,6 +9,6 @@ on:
 jobs:
   call_workflow:
     name: Call workflow
-    uses: Gakuto1112/PublicPullRequestWorkflows/.github/workflows/request_review_trigger_core.yml
+    uses: Gakuto1112/PublicPullRequestWorkflows/.github/workflows/request_review_trigger_core.yml@main
     with:
       reviewer: <github_username>

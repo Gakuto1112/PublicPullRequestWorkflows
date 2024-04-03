@@ -12,6 +12,6 @@ jobs:
     name: Call workflow
     permissions:
       pull-requests: write
-    uses: Gakuto1112/PublicPullRequestWorkflows/.github/workflows/request_review_core.yml
+    uses: Gakuto1112/PublicPullRequestWorkflows/.github/workflows/request_review_core.yml@main
     with:
       reviewer: <github_username>
