@@ -5,6 +5,7 @@ on: workflow_call
 jobs:
   comment:
     name: Comment when changes requested
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
