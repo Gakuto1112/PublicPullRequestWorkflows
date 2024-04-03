@@ -10,4 +10,6 @@ on:
 jobs:
   call_workflow:
     name: Call workflow
+    permissions:
+      pull-requests: write
     uses: ./.github/workflows/comment_when_changes_requested_core.yml
