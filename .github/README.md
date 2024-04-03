@@ -1,15 +1,15 @@
 Language: 　**English**　|　[日本語](./README_jp.md)
 
 # PublicPullRequestWorkflows
-パブリックレポジトリでのプルリクエストに関する、再利用可能な[GitHub Actions](https://github.co.jp/features/actions)ワークフローです。
-任意のレポジトリの`.github/workflows/`内にワークフローのファイルを追加するだけで利用できます。
+These are [GitHub Actions](https://github.com/features/actions) workflows related to pull requests in public repositories.
+You can use these workflows just by adding some workflow files to `./github/workflows` in any repository.
 
-このレポジトリには以下のワークフローが利用可能です。
+The following workflows are available.
 
-- プルリクエストがオープンになった際に、予め設定したGitHubユーザーにレビューの依頼を行う。
-- レビュワーがプルリクエストに対して変更を要求した場合にレビュイーに対して、変更が完了した際に再度レビューを依頼することを促すコメントを送信する。
+- Request a review to the specific GitHub user when a pull request is opened.
+- Send a comment to the reviewee that encourage them to re-request a review to the reviewer when the reviewer requested the reviewee to make some changes.
 
-これらのワークフローは、悪意のあるレビュイーがプルリクエストを悪用できないような設計になっており、不特定多数のユーザーがレビュイーになり得るパブリックレポジトリでも安全に利用できます。
+These workflows are designed to prevent malicious reviewees from abusing pull requests, and can be safely used in public repositories where any GitHub users can be reviewees.
 
 ## 使い方
 ### Request review
