@@ -15,7 +15,7 @@
 ### Request review
 プルリクエストがオープンになった際に、予め設定したGitHubユーザーにレビューの依頼を行うワークフローです。
 
-`src/`内にある以下のファイルをレポジトリの`.github/workflows/`に追加してください。
+`workflow_templates/`内にある以下のファイルをレポジトリの`.github/workflows/`に追加してください。
 
 - request_review.yml
 - request_review_trigger.yml
@@ -38,7 +38,7 @@
 > <reviewer_name> requested you to make some changes.
 > Once you make changes, please re-request <reviewer_name> to review by clicking "re-request review" button 🔄 (located in the reviewers list on the right side of this page).
 
-`src/`内にある以下のファイルをレポジトリの`.github/workflows/`に追加してください。
+`workflow_templates/`内にある以下のファイルをレポジトリの`.github/workflows/`に追加してください。
 
 - comment_when_changes_requested.yml
 - comment_when_changes_requested_trigger.yml
