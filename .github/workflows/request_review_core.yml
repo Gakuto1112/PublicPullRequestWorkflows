@@ -17,10 +17,11 @@ jobs:
       pull-requests: write
     steps:
       - name: Download artifact
-        uses: dawidd6/action-download-artifact@v6
+        uses: dawidd6/action-download-artifact@v9
         with:
           workflow: request_review_trigger.yml
           name: event_data
+          allow_forks: true
       - name: Output pull request
         id: output_event_data
         run: echo event_data=$(<./event_data.json) >> $GITHUB_OUTPUT
