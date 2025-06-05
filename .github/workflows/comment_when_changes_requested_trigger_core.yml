@@ -16,7 +16,7 @@ jobs:
         env:
           CONTEXT: ${{ toJSON(github.event) }}
       - name: Upload event data
-        uses: actions/upload-artifact@v4.3.1
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: event_data
           path: ./event_data.json
